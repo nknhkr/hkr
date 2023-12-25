@@ -1,0 +1,19 @@
+#index {
+    background-color: #FBAB34;
+}
+
+#quiz {
+    background-color: #EB8947;
+}
+
+.container {
+    width:450px;
+    height:350px;
+    border: 1px solid black;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
