@@ -12,7 +12,8 @@
 </head>
 <body id="index">
     <div class="container">
-        <form>
+        <form onsubmit="return validate()">
+            <h2>välkommen</h2>
             <label for="fname">first name:</label>
             <input type="text" id="fname" name="fname">
             <br>
@@ -25,8 +26,16 @@
             <input type="email" id="email" name="email">
             <br>
 
-            <input type="submit" name="start" value="start">
+            <div id="error-messages">
+                <p id="errorFname"></p>
+                <p id="errorLname"></p>
+                <p id="errorEmail"></p>
+            </div>
+
+            <input type="submit" name="start" value="start quiz" id="button">
         </form>
     </div>
+
+    <script src="noran.js"></script>
 </body>
 </html>
