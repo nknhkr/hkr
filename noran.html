@@ -12,7 +12,7 @@
 </head>
 <body id="quiz">
     <div class="container">
-        <form>
+        <form onsubmit="return validateQuiz()">
             <label for="q1" class="qLabel">1. what fruit is technically a berry? *</label>
             <input type="radio" name="q1" value="apple" required> apple
             <input type="radio" name="q1" value="banana"> banana
@@ -43,9 +43,13 @@
             <input type="checkbox" name="" value="q5"> peach
             <br>
 
-            <input type="submit" name="submit quiz" value="submit quiz" id="button">
-            <input type="submit" name="check quiz" value="check quiz" id="button">
+            <input type="submit" name="submit quiz" value="submit quiz" id="submitButton">
+            <input type="submit" name="check quiz" value="check quiz" id="checkButton">
         </form>
+        
+        <p id="displayMessage"></p>
     </div>
+    
+    <script src="noran.js"></script>
 </body>
 </html>
