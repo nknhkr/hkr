@@ -1,4 +1,4 @@
-function validate(){
+function validateVisitor(){
     //clear error messages
     let errorC = document.getElementById('errorMessage');
     errorC.textContent = "";
@@ -52,4 +52,20 @@ function validate(){
     //om ingen returnering hänt hittills bör allt ha validerats rätt och då kan quizzen börja
     window.location.href = 'noran.html';
     return false;
+}
+
+function validateQuiz(){
+    // rätt värden, multiple choice är i arrays
+    const correctAnswers = {
+        q1: 'banana',
+        q2: ['apple', 'pear'],
+        q3: 'strawberry',
+        q4: 'yes',
+        q5: ['grape', 'fig']
+    }
+
+    // få tag på användarens svar
+
+    // jämför svar
+
 }

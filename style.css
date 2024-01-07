@@ -8,7 +8,7 @@
 
 .container {
     width:450px;
-    max-height: 450px;
+    max-height: 570px;
     border: 1px solid black;
     position: absolute;
     left: 0;
@@ -18,10 +18,13 @@
     margin: auto;
 }
 
+#index-container {
+    height: 450px;
+}
+
 form {
     text-align: center;
     padding:20px;
-    margin-top:10px;
     text-align:center;
     font-size:18px;
     max-width: 100%;
@@ -34,6 +37,16 @@ label {
     font-size:15px;
 }
 
+.qLabel {
+    font-size: 18px; 
+    float:none; 
+    display:block; 
+    margin-left:0;
+    margin-bottom:12px;
+    margin-top:12px;
+    font-weight:bold;
+}
+
 input[type=text], input[type=email] {
     font-size:15px;
     border-radius: 3px;
@@ -42,6 +55,10 @@ input[type=text], input[type=email] {
     width:300px;
     padding: 13px 15px;
     display: inline-block;
+}
+
+input {
+    margin-bottom:14px;
 }
 
 input[type=submit] {

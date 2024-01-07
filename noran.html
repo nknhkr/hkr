@@ -11,5 +11,41 @@
 
 </head>
 <body id="quiz">
+    <div class="container">
+        <form>
+            <label for="q1" class="qLabel">1. what fruit is technically a berry? *</label>
+            <input type="radio" name="q1" value="apple" required> apple
+            <input type="radio" name="q1" value="banana"> banana
+            <input type="radio" name="q1" value="grapes"> grapes
+            <br>
+
+            <label for="q2" class="qLabel">2. which of these fruits are distant cousins? *</label>
+            <input type="checkbox" name="q2" value="apple" required> apple
+            <input type="checkbox" name="q2" value="orange"> orange
+            <input type="checkbox" name="q2" value="pear"> pear
+            <input type="checkbox" name="q2" value="banana"> banana
+            <br>
+
+            <label for="q3" class="qLabel">3. which fruit has seeds that breaks all the seed-placement rules? *</label>
+            <input type="text" id="q3" required> 
+            <br>
+
+            <label for="q4" class="qLabel">4. can grapes explode if you put them in the microwave? *</label>
+            <input type="radio" name="q4" value="yes" required> yes
+            <input type="radio" name="q4" value="no"> no
+            <br>
+
+            <label for="q5" class="qLabel">5. which fruits are commonly used in dried forms? *</label>
+            <input type="checkbox" name="" value="q5" required> banana
+            <input type="checkbox" name="" value="q5"> grape
+            <input type="checkbox" name="" value="q5"> kiwi
+            <input type="checkbox" name="" value="q5"> fig
+            <input type="checkbox" name="" value="q5"> peach
+            <br>
+
+            <input type="submit" name="submit quiz" value="submit quiz" id="button">
+            <input type="submit" name="check quiz" value="check quiz" id="button">
+        </form>
+    </div>
 </body>
 </html>
