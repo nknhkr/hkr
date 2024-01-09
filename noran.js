@@ -1,6 +1,6 @@
 function validateVisitor(){
     //clear error messages
-    let errorC = document.getElementById('displayMessage');
+    let errorC = document.getElementById('displayErrorMessage');
     errorC.textContent = "";
 
     //få tag på värden ifyllda av formuläret
@@ -9,7 +9,7 @@ function validateVisitor(){
     const email = document.getElementById('email').value;
 
     //få tag på p-element som ska visa felmeddelanden
-    let error = document.getElementById('displayMessage');
+    let error = document.getElementById('displayErrorMessage');
 
     let letters = /^[a-zA-z]+$/;
     let emailLetters = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -57,6 +57,8 @@ function validateVisitor(){
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.querySelector('form');
     const checkButton = document.querySelector('[name="check quiz"]');
+    const message = document.getElementById('displayMessage');
+    const error = document.getElementById('displayErrorMessage');
     let score = 0;
 
     // rätt värden, multiple choice är i arrays
@@ -80,6 +82,17 @@ document.addEventListener('DOMContentLoaded', function () {
         const q4Answer = document.querySelector('input[name="q4"]:checked');
         const q5Answers = document.querySelectorAll('input[name="q5"]:checked');
 
+        //validera checkboxes
+        if (q2Answers.length === 0) {
+            error.textContent = "question 2 required";
+            return;
+        }
+
+        if (q5Answers.length === 0) {
+            error.textContent = "question 5 required";
+            return;
+        }
+
         // jämför svar
         //------------------------fråga 1
         if(q1Answer.value === correctAnswers.q1){
@@ -87,17 +100,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         //------------------------fråga 2
-        let isCorrect = true;
         for(let i = 0; i < q2Answers.length; i++){
-            if(!correctAnswers.q2.includes(q2Answers[i].value)){
-                isCorrect = false;
-                //betyder att ett inkorrekt svar hittats så breaker ba direkt
+            if(correctAnswers.q2.includes(q2Answers[i].value)){
+                score ++;
             }
-
-        }
-
-        if(isCorrect){
-            score++;
         }
 
         //------------------------fråga 3
@@ -111,26 +117,18 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         //------------------------fråga 5
-        let isQ5Correct = true;
         for(let i = 0; i < q5Answers.length; i++){
-            if(!correctAnswers.q5.includes(q5Answers[i].value)){
-                isQ5Correct = false;
-                //betyder att ett inkorrekt svar hittats så breaker ba direkt
+            if(correctAnswers.q5.includes(q5Answers[i].value)){
+                score ++;
             }
-
         }
-
-        if(isQ5Correct){
-            score++;
-        }
-
-        let message = document.getElementById('displayMessage');
-        message.textContent = `You scored ${score} out of 5 points!`;
+        
+        message.textContent = `You scored ${score} out of 7 points`;
     });
 
     checkButton.addEventListener('click', function (event) {
         event.preventDefault();
-        alert("yo");
+        message.textContent = `The correct answers were: ${correctAnswers.q1}, (${correctAnswers.q2}), ${correctAnswers.q3}, ${correctAnswers.q4}, (${correctAnswers.q5})`;
     });
 
 });
