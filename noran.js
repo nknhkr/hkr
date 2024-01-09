@@ -1,67 +1,69 @@
+// function to validate visitor form
 function validateVisitor(){
     //clear error messages
     let errorC = document.getElementById('displayErrorMessage');
     errorC.textContent = "";
 
-    //få tag på värden ifyllda av formuläret
+    //get values from filled in form
     const fname = document.getElementById('fname').value;
     const lname = document.getElementById('lname').value;
     const email = document.getElementById('email').value;
 
-    //få tag på p-element som ska visa felmeddelanden
+    //get paragraph element that displays error messages
     let error = document.getElementById('displayErrorMessage');
 
+    //variables for validation
     let letters = /^[a-zA-z]+$/;
     let emailLetters = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     
-    //------ FNAMN VALIDERING
-    //kolla om inputvärde av fnamn endast innehåller siffror. om inte, ge felmeddelande och returnera falskt
+    //------ FNAMN VALIDATION
     if(fname === ""){
-        error.textContent = "fnamn obligatorisk";
+        error.textContent = "Please fill in your first name.";
         return false;
     }
     
     if(!(letters.test(fname))){
-        error.textContent = "skriv ba bokstäver för fnamn";
+        error.textContent = "Please enter only letters for first name.";
         return false;
     }
 
-    //------ LNAMN VALIDERING
-    //kolla om inputvärde av lnamn endast innehåller siffror. om inte, ge felmeddelande och returnera falskt
+    //------ LNAMN VALIDATION
    if(lname === ""){
-        error.textContent = "lnamn obligatorisk";
+        error.textContent = "Please fill in your last name.";
         return false;
     }
    
     if(!(letters.test(lname))){
-        error.textContent = "skriv ba bokstäver för lnamn";
+        error.textContent = "Please enter only letters for last name.";
         return false;
     }
 
-    //------ EMAIL VALIDERING
+    //------ EMAIL VALIDATION
     if(email === ""){
-        error.textContent = "email obligatorisk";
+        error.textContent = "Please fill in your email.";
         return false;
     }
 
     if(!(emailLetters.test(email))){
-        error.textContent = "skriv ordentlig email";
+        error.textContent = "Please enter a valid email.";
         return false;
     }
 
-    //om ingen returnering hänt hittills bör allt ha validerats rätt och då kan quizzen börja
+    //if no returns so far, everything is correctly validated - redirect to quiz
     window.location.href = 'noran.html';
     return false;
 }
 
+//event listener that waits until HTML document is fully loaded
 document.addEventListener('DOMContentLoaded', function () {
+    //variables saving the filled in answers
     const form = document.querySelector('form');
     const checkButton = document.querySelector('[name="check quiz"]');
     const message = document.getElementById('displayMessage');
     const error = document.getElementById('displayErrorMessage');
     let score = 0;
 
-    // rätt värden, multiple choice är i arrays
+    //constant for the correct answers, multiple-choice stored in arrays
     const correctAnswers = {
         q1: 'banana',
         q2: ['apple', 'pear'],
@@ -70,66 +72,75 @@ document.addEventListener('DOMContentLoaded', function () {
         q5: ['grape', 'fig']
     }
 
+    //function to validate checkboxes (that they're filled in)
+    function validateCheckboxes(answers, message){
+        if(answers.length === 0){
+            error.textContent = message;
+            return false;
+        }
+        return true;
+    }
+
+    //function for checking if the answer is correct
+    function compareAnswers(user, correct){
+        return user === correct;
+    }
+
+    //function that returns score depending on if the selected checkbox is correct or not
+    function validateCheckboxAnswers(user, correct){
+        let score = 0;
+        for(let i = 0; i < user.length; i++){
+            if(correct.includes(user[i].value)){
+                score++;
+            }
+        }
+        return score;
+    }
+
+    //event listener to form submit button
+    //calculates, validates and presents quiz results
     form.addEventListener('submit', function (event) {
         event.preventDefault();
-        
         score = 0;
 
-        // få tag på användarens svar
+        //constans for users answers
         const q1Answer = document.querySelector('input[name="q1"]:checked');
         const q2Answers = document.querySelectorAll('input[name="q2"]:checked');
         const q3Answer = document.getElementById('q3').value;
         const q4Answer = document.querySelector('input[name="q4"]:checked');
         const q5Answers = document.querySelectorAll('input[name="q5"]:checked');
 
-        //validera checkboxes
-        if (q2Answers.length === 0) {
-            error.textContent = "question 2 required";
+        if(!validateCheckboxes(q2Answers, "Please select at least one option for question 2.") || !validateCheckboxes(q5Answers, "Please select at least one option for question 5.")){
             return;
         }
 
-        if (q5Answers.length === 0) {
-            error.textContent = "question 5 required";
-            return;
-        }
-
-        // jämför svar
-        //------------------------fråga 1
-        if(q1Answer.value === correctAnswers.q1){
+         error.textContent = "";
+         
+        //evaluate answers
+        if(compareAnswers(q1Answer.value, correctAnswers.q1)){
             score++;
         }
 
-        //------------------------fråga 2
-        for(let i = 0; i < q2Answers.length; i++){
-            if(correctAnswers.q2.includes(q2Answers[i].value)){
-                score ++;
-            }
-        }
+        score += validateCheckboxAnswers(q2Answers, correctAnswers.q2);
 
-        //------------------------fråga 3
-        if(q3Answer === correctAnswers.q3){
+        if(compareAnswers(q3Answer.value, correctAnswers.q3)){
             score++;
         }
 
-        //------------------------fråga 4
-        if(q4Answer.value === correctAnswers.q4){
+        if(compareAnswers(q4Answer.value, correctAnswers.q4)){
             score++;
         }
 
-        //------------------------fråga 5
-        for(let i = 0; i < q5Answers.length; i++){
-            if(correctAnswers.q5.includes(q5Answers[i].value)){
-                score ++;
-            }
-        }
-        
+        score += validateCheckboxAnswers(q5Answers, correctAnswers.q5);
+
+        //present score
         message.textContent = `You scored ${score} out of 7 points`;
     });
 
+    //event listener for showing correct answers
     checkButton.addEventListener('click', function (event) {
         event.preventDefault();
         message.textContent = `The correct answers were: ${correctAnswers.q1}, (${correctAnswers.q2}), ${correctAnswers.q3}, ${correctAnswers.q4}, (${correctAnswers.q5})`;
     });
 
 });
-

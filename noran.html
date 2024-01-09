@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="style.css">
 
 </head>
-<body id="quiz">
+<body>
     <a href="index.html">back to visitor form</a>
     <div class="container">
         <form onsubmit="return validateQuiz()">
@@ -46,9 +46,9 @@
 
             <input type="submit" name="submit quiz" value="submit quiz" id="submitButton">
             <input type="submit" name="check quiz" value="check answers" id="checkButton">
+            
+            <p id="displayErrorMessage"></p>
         </form>
-
-        <p id="displayErrorMessage"></p>
         <p id="displayMessage"></p>
     </div>
     
