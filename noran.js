@@ -56,7 +56,6 @@ function validateVisitor(){
 
 //event listener that waits until HTML document is fully loaded
 document.addEventListener('DOMContentLoaded', function () {
-    //variables saving the filled in answers
     const form = document.querySelector('form');
     const checkButton = document.querySelector('[name="check quiz"]');
     const message = document.getElementById('displayMessage');
@@ -81,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return true;
     }
 
+
     //function for checking if the answer is correct
     function compareAnswers(user, correct){
         return user === correct;
@@ -103,19 +103,34 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
         score = 0;
 
-        //constans for users answers
+        //constanTs for users answers
         const q1Answer = document.querySelector('input[name="q1"]:checked');
         const q2Answers = document.querySelectorAll('input[name="q2"]:checked');
         const q3Answer = document.getElementById('q3').value;
         const q4Answer = document.querySelector('input[name="q4"]:checked');
         const q5Answers = document.querySelectorAll('input[name="q5"]:checked');
 
-        if(!validateCheckboxes(q2Answers, "Please select at least one option for question 2.") || !validateCheckboxes(q5Answers, "Please select at least one option for question 5.")){
+        error.textContent = "";
+
+        //validate required uestions
+        if(q1Answer === null){
+            error.textContent = "Please fill in an answer for question 1.";
+            return ;
+        }
+
+        if(!validateCheckboxes(q2Answers, "Please select at least one option for question 2.")){
+            return;
+        } 
+
+        if(q3Answer.length === 0){
+            error.textContent = "Please fill in an answer for question 3.";
             return;
         }
 
-         error.textContent = "";
-         
+        if(!validateCheckboxes(q5Answers, "Please select at least one option for question 5.")){
+            return;
+        } 
+
         //evaluate answers
         if(compareAnswers(q1Answer.value, correctAnswers.q1)){
             score++;
@@ -127,7 +142,8 @@ document.addEventListener('DOMContentLoaded', function () {
             score++;
         }
 
-        if(compareAnswers(q4Answer.value, correctAnswers.q4)){
+        //skip scoring for q4 if it isnt selected since it's not required
+        if (q4Answer !== null && compareAnswers(q4Answer.value, correctAnswers.q4)) {
             score++;
         }
 
